@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { yahooAuthCallback } from "../api/yahooAuthService";
-import logger from "../logger";
 import { YahooAuthNonceKey, YahooAuthStateKey } from "../api/costants";
+import logger from "../logger";
 
 const useYahooAuthCallback = () => {
   const [loading, setLoading] = useState(true);
