@@ -1,0 +1,67 @@
+﻿.welcome-outer {
+    height: 95vh; /* Takes up almost the entire page */
+    display: flex;
+    justify-content: center; /* Horizontally center the inner container */
+    align-items: center; /* Vertically center the inner container */
+    background-color: #f0f0f0; /* Light gray background */
+    color: #17408B; /* Dark blue text for better contrast */
+}
+
+/* Inner container styling */
+.welcome-inner {
+    width: 25vw; /* Inner container takes 50% of the viewport width */
+    padding: 32px; /* Padding around the inner container */
+    height: 200px;
+    background-color: #ffffff; /* White background */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* Light box shadow */
+    border-radius: 8px; /* Rounded corners */
+    color: #17408B; /* Dark blue text inside the white box */
+}
+
+.login-page {
+    background: linear-gradient(135deg, #17408B, #FFFFFF, #B22234); /* Updated gradient with a softer red */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff; /* Ensure the text contrasts well on the gradient */
+    font-family: 'Roboto', sans-serif;
+}
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    padding: 20px;
+    color: #11294D; /* Dark blue text to contrast white and red sections */
+}
+
+.hero-content {
+    max-width: 400px;
+    margin-right: 20px;
+    color: #11294D; /* Dark blue for headings and paragraphs */
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #B22234; /* Muted red for headings */
+}
+
+.hero-content p {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: #11294D; /* Dark blue for body text */
+}
+
+.hero-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder-svg {
+    max-width: 100%;
+    height: auto;
+}
