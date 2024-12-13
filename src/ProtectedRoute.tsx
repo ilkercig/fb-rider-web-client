@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { checkAuthentication } from "./api/yahooAuthService";
 import { CircularProgress, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import logger from "./logger";
 
 interface ProtectedRouteProps {
@@ -11,36 +10,31 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const navigate = useNavigate();
-  const {
-    data: isAuth,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["checkAuthentication"],
-    queryFn: checkAuthentication,
-  });
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    async function checkAuth() {
+      try {
+        const result = await checkAuthentication();
+        setIsAuth(result);
+      } catch {
+        setIsAuth(false);
+      }
+      setIsLoading(false);
+    }
+
+    checkAuth();
+
     logger.warn("component did mount");
 
-    if (isLoading) {
+    if (!isLoading && isAuth === false) {
       logger.warn("Loading...");
+      navigate("/login");
+
       return;
     }
-
-    if (isAuth === false) {
-      logger.warn("Redirecting to login page");
-      navigate("/login");
-    }
-    if (isError) {
-      logger.warn("Error occured");
-      logger.warn("Redirecting to login page");
-      navigate("/login");
-    }
-    return () => {
-      logger.warn("component will unmount");
-    };
-  }, [isAuth, isError, isLoading, navigate]);
+  }, [isAuth, isLoading, navigate]);
 
   // While checking authentication, you can render a loading spinner or similar
   if (isLoading) {
@@ -49,13 +43,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
         <CircularProgress />
         <Typography variant="h6">Loading...</Typography>
       </>
-    );
-  }
-  if (isError) {
-    return (
-      <Typography variant="h6">
-        An error occurred while checking authentication
-      </Typography>
     );
   }
 
