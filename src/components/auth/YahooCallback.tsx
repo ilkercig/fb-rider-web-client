@@ -1,6 +1,6 @@
 import { CircularProgress, Typography } from "@mui/material";
 import ErrorPage from "../ErrorPage";
-import useYahooAuthCallback from "../../hooks/useYahooAuthCallback";
+import useYahooAuthCallback from "../../hooks/useAuthCallback";
 
 const YahooCallback = () => {
   const { loading, error } = useYahooAuthCallback(); // Using the custom hook
