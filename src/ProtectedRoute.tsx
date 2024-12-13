@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { checkAuthentication } from "./api/yahooAuthService";
+//import { checkAuthentication } from "./api/yahooAuthService";
 import { CircularProgress, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+//import { useQuery } from "@tanstack/react-query";
 import { ReactNode, useEffect } from "react";
 import logger from "./logger";
 
