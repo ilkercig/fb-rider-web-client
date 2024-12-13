@@ -13,31 +13,20 @@ import GlobalSnackbar from "./components/GlobalSnackbar";
 function App() {
   const queryClient = new QueryClient();
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/callback" element={<YahooCallback />} />
+          <Route path="/callback" element={<YahooCallback />} />
 
-        <Route
-          element={
-            <QueryClientProvider client={queryClient}>
-              <ProtectedRoute />
-            </QueryClientProvider>
-          }
-        >
-          <Route
-            path="*"
-            element={
-              <QueryClientProvider client={queryClient}>
-                <HomePage />
-              </QueryClientProvider>
-            }
-          />
-        </Route>
-      </Routes>
-      <GlobalSnackbar />
-    </Router>
+          <Route element={<ProtectedRoute />}>
+            <Route path="*" element={<HomePage />} />
+          </Route>
+        </Routes>
+        <GlobalSnackbar />
+      </Router>
+    </QueryClientProvider>
   );
 }
 
