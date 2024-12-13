@@ -1,11 +1,16 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { checkAuthentication } from "./api/yahooAuthService";
 import { CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { ReactNode, useEffect } from "react";
 import logger from "./logger";
-import { useEffect } from "react";
 
-const ProtectedRoute: React.FC = () => {
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const navigate = useNavigate();
   const {
     data: isAuth,
     isLoading,
@@ -15,18 +20,30 @@ const ProtectedRoute: React.FC = () => {
     queryFn: checkAuthentication,
   });
 
-  const redirectToLogin =  isError || !isAuth;
-
   useEffect(() => {
-    logger.warn("ProtectedRoute mounted " + redirectToLogin);
+    logger.warn("component did mount");
+
+    if (isLoading) {
+      logger.warn("Loading...");
+      return;
+    }
+
+    if (isAuth === false) {
+      logger.warn("Redirecting to login page");
+      navigate("/login");
+    }
+    if (isError) {
+      logger.warn("Error occured");
+      logger.warn("Redirecting to login page");
+      navigate("/login");
+    }
     return () => {
-      logger.warn("ProtectedRoute unmounted " + redirectToLogin);
+      logger.warn("component will unmount");
     };
-  });
+  }, [isAuth, isError, isLoading, navigate]);
 
   // While checking authentication, you can render a loading spinner or similar
   if (isLoading) {
-    logger.warn("Checking authentication...");
     return (
       <>
         <CircularProgress />
@@ -34,12 +51,15 @@ const ProtectedRoute: React.FC = () => {
       </>
     );
   }
-  if (redirectToLogin) {
-    logger.warn("Attempt to redirect to login");
-    return <Navigate to="/login" replace />;
+  if (isError) {
+    return (
+      <Typography variant="h6">
+        An error occurred while checking authentication
+      </Typography>
+    );
   }
 
-  return <Outlet />;
+  return isAuth ? <>{children}</> : null;
 };
 
 export default ProtectedRoute;
