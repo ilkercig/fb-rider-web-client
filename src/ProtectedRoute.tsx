@@ -2,6 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { checkAuthentication } from "./api/yahooAuthService";
 import { CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import logger from "./logger";
 
 const ProtectedRoute: React.FC = () => {
   const {
@@ -23,6 +24,7 @@ const ProtectedRoute: React.FC = () => {
     );
   }
   if (isError || !isAuth) {
+    logger.error("Attempt to redirect to login");
     return <Navigate to="/login" replace />;
   }
 
