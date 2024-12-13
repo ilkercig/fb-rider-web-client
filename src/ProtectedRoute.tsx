@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-//import { checkAuthentication } from "./api/yahooAuthService";
+import { checkAuthentication } from "./api/yahooAuthService";
 import { CircularProgress, Typography } from "@mui/material";
-//import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ReactNode, useEffect } from "react";
 import logger from "./logger";
 
@@ -11,17 +11,14 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const navigate = useNavigate();
-  // const {
-  //   data: isAuth,
-  //   isLoading,
-  //   isError,
-  // } = useQuery({
-  //   queryKey: ["checkAuthentication"],
-  //   queryFn: checkAuthentication,
-  // });
-  const isAuth = false;
-  const isLoading = false;
-  const isError = true;
+  const {
+    data: isAuth,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["checkAuthentication"],
+    queryFn: checkAuthentication,
+  });
 
   useEffect(() => {
     logger.warn("component did mount");
@@ -62,7 +59,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     );
   }
 
-  return isAuth ? <>{children}</> : null;
+  if (isAuth === true) {
+    return <>{children}</>;
+  }
+
+  return null;
 };
 
 export default ProtectedRoute;

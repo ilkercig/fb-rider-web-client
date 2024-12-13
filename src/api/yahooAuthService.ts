@@ -53,7 +53,7 @@ export async function yahooAuthCallback(code: string, nonce: string) {
 
 export const checkAuthentication = async (): Promise<boolean> => {
   try {
-    const response = await performRequest<boolean>(
+    await performRequest<boolean>(
       {
         url: endPoints.authStatus,
         method: "GET",
@@ -61,7 +61,7 @@ export const checkAuthentication = async (): Promise<boolean> => {
       },
       "Authentication Check"
     );
-    return response;
+    return true;
   } catch {
     return false; // Assume not authenticated on error
   }
