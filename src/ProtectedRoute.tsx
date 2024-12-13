@@ -17,8 +17,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     async function checkAuth() {
       try {
         const result = await checkAuthentication();
+        logger.warn("Authentication status", result);
         setIsAuth(result);
       } catch {
+        logger.error("Error checking authentication status");
         setIsAuth(false);
       }
       setIsLoading(false);

@@ -53,6 +53,7 @@ export async function yahooAuthCallback(code: string, nonce: string) {
 
 export const checkAuthentication = async (): Promise<boolean> => {
   try {
+    logger.warn("Checking authentication status is called");
     await performRequest<boolean>(
       {
         url: endPoints.authStatus,
