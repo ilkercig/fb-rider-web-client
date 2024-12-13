@@ -15,15 +15,18 @@ const ProtectedRoute: React.FC = () => {
     queryFn: checkAuthentication,
   });
 
+  const redirectToLogin =  isError || !isAuth;
+
   useEffect(() => {
-    logger.warn("ProtectedRoute mounted");
+    logger.warn("ProtectedRoute mounted " + redirectToLogin);
     return () => {
-      logger.warn("ProtectedRoute unmounted");
+      logger.warn("ProtectedRoute unmounted " + redirectToLogin);
     };
   });
 
   // While checking authentication, you can render a loading spinner or similar
   if (isLoading) {
+    logger.warn("Checking authentication...");
     return (
       <>
         <CircularProgress />
@@ -31,8 +34,8 @@ const ProtectedRoute: React.FC = () => {
       </>
     );
   }
-  if (isError || !isAuth) {
-    logger.error("Attempt to redirect to login");
+  if (redirectToLogin) {
+    logger.warn("Attempt to redirect to login");
     return <Navigate to="/login" replace />;
   }
 
