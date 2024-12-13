@@ -11,14 +11,17 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const navigate = useNavigate();
-  const {
-    data: isAuth,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["checkAuthentication"],
-    queryFn: checkAuthentication,
-  });
+  // const {
+  //   data: isAuth,
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: ["checkAuthentication"],
+  //   queryFn: checkAuthentication,
+  // });
+  const isAuth = false;
+  const isLoading = false;
+  const isError = true;
 
   useEffect(() => {
     logger.warn("component did mount");
