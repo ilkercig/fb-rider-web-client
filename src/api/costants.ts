@@ -4,7 +4,7 @@ export const urls = {
   yahooAuthorization: "https://api.login.yahoo.com/oauth2/request_auth",
 };
 
-export const backEndUrl = getEnvVariable("REACT_APP_BACKEND_URL");
+export const backEndUrl = getEnvVariable("FBRIDER_BACKEND_URI");
 
 export const endPoints = {
   authCallback: backEndUrl + "/api/yahooauth/callback",
