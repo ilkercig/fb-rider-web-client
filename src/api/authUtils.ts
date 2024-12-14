@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from "uuid";
 import { urls, YahooAuthNonceKey, YahooAuthStateKey } from "./costants";
 import { getEnvVariable } from "../utils/envUtils";
 export function constructYahooLoginUrl() {
-  const redirectUri = getEnvVariable("FBRIDER_YAHOO_REDIRECT_URI");
-  const clientId = getEnvVariable("FBRIDER_YAHOO_CLIENT_ID");
+  const redirectUri = getEnvVariable("VITE_YAHOO_REDIRECT_URI");
+  const clientId = getEnvVariable("VITE_YAHOO_CLIENT_ID");
     const envVariableError =
       "Yahoo Redirect URI or Client ID is not set in environment variables.";    
   

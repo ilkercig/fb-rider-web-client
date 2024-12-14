@@ -29,8 +29,8 @@ describe("constructYahooLoginUrl", () => {
 
     // Mock getEnvVariable to return values for the test
     (getEnvVariable as jest.Mock).mockImplementation((key: unknown) => {
-      if (key === "FBRIDER_YAHOO_REDIRECT_URI") return mockRedirectUri;
-      if (key === "FBRIDER_YAHOO_CLIENT_ID") return mockClientId;
+      if (key === "VITE_YAHOO_REDIRECT_URI") return mockRedirectUri;
+      if (key === "VITE_YAHOO_CLIENT_ID") return mockClientId;
       return undefined;
     });
 
