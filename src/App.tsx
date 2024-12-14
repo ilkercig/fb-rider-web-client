@@ -20,14 +20,9 @@ function App() {
 
           <Route path="/callback" element={<YahooCallback />} />
 
-          <Route
-            path="*"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
+          <Route element={<ProtectedRoute />}>
+            <Route path="*" element={<HomePage />} />
+          </Route>
         </Routes>
         <GlobalSnackbar />
       </Router>
