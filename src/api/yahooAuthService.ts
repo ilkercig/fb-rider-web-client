@@ -44,6 +44,7 @@ export async function yahooAuthCallback(code: string, nonce: string) {
       url: endPoints.authCallback,
       method: "POST",
       data: { code, nonce },
+      withCredentials: true,
       headers: { "Content-Type": "application/json" },
     },
     "Yahoo Auth Callback"
