@@ -20,9 +20,15 @@ async function performRequest<T>(
   validate?: (data: unknown) => T
 ): Promise<T> {
   try {
+    // Ensure withCredentials is set to true by default
+    const finalConfig: AxiosRequestConfig = {
+      ...config,
+      withCredentials: config.withCredentials ?? true, // Use true unless explicitly set
+    };
+
     logger.trace(`Performing request: ${context}`, { url: config.url, method: config.method });
 
-    const response = await axios(config);
+    const response = await axios(finalConfig);
 
     logger.trace(`Request successful: ${context}`, { responseData: response.data });
 
@@ -44,7 +50,6 @@ export async function yahooAuthCallback(code: string, nonce: string) {
       url: endPoints.authCallback,
       method: "POST",
       data: { code, nonce },
-      withCredentials: true,
       headers: { "Content-Type": "application/json" },
     },
     "Yahoo Auth Callback"
@@ -56,8 +61,7 @@ export const checkAuthentication = async (): Promise<boolean> => {
     const response = await performRequest<boolean>(
       {
         url: endPoints.authStatus,
-        method: "GET",
-        withCredentials: true,
+        method: "GET"
       },
       "Authentication Check"
     );
@@ -72,7 +76,6 @@ export const fetchUserData = async (): Promise<YahooUser> => {
     {
       url: endPoints.userData,
       method: "GET",
-      withCredentials: true,
       headers: { "Content-Type": "application/json" },
     },
     "Fetch User Data",
@@ -85,8 +88,7 @@ export const logout = async () => {
     {
       url: endPoints.logout,
       method: "POST",
-      data: {},
-      withCredentials: true,
+      data: {}
     },
     "Logout"
   );
