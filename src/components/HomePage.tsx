@@ -10,12 +10,16 @@ import { fetchUserData } from "../api/yahooAuthService";
 import UserProfileMenu from "./UserProfileMenu";
 import { useEffect } from "react";
 import setupAxiosInterceptors from "../api/setupAxiosInterceptors";
+import FantasyLeagueList from "./FantasyLeagueCardList";
+import BeastStandings from "./BeastStandings";
 export default function HomePage() {
   const navigate = useNavigate();
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: fetchUserData,
   });
+
+
 
   useEffect(() => {
     // Define the redirect function
@@ -26,7 +30,7 @@ export default function HomePage() {
   }, [navigate]);
 
   return (
-    <Box sx={{ display: "flex", backgroundColor: "linear-gradient(135deg, #3498db, #8e44ad)" }}>
+    <Box sx={{ backgroundColor: "linear-gradient(135deg, #3498db, #8e44ad)" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -54,9 +58,10 @@ export default function HomePage() {
       {/* Spacer for AppBar */}
       <Toolbar />
 
-      <Box component="main" sx={{ flexGrow: 1, pt: 10 }}>
+      <Box component="main" sx={{ pt: 2 }}>
         <Routes>
-          <Route path="/*" element={<div />} />
+          <Route path="/*" element={<FantasyLeagueList/>} />
+          <Route path="/league/:leagueKey" element={<BeastStandings></BeastStandings>} />
         </Routes>
       </Box>
     </Box>

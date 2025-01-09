@@ -2,7 +2,7 @@ import {
   endPoints,
 } from "./costants";
 import axios, { AxiosRequestConfig } from "axios";
-import { YahooUser, YahooUserSchema } from "./types";
+import { AllPlayStandings, AllPlayStandingsSchema, FantasyLeague, FantasyTeam, LeagueSettings, LeagueSettingsSchema, YahooUser, YahooUserSchema } from "./types";
 import logger from "../logger";
 import handleError from "./handlerError";
 
@@ -20,9 +20,15 @@ async function performRequest<T>(
   validate?: (data: unknown) => T
 ): Promise<T> {
   try {
+    // Ensure withCredentials is set to true by default
+    const finalConfig: AxiosRequestConfig = {
+      ...config,
+      withCredentials: config.withCredentials ?? true, // Use true unless explicitly set
+    };
+
     logger.trace(`Performing request: ${context}`, { url: config.url, method: config.method });
 
-    const response = await axios(config);
+    const response = await axios(finalConfig);
 
     logger.trace(`Request successful: ${context}`, { responseData: response.data });
 
@@ -44,7 +50,6 @@ export async function yahooAuthCallback(code: string, nonce: string) {
       url: endPoints.authCallback,
       method: "POST",
       data: { code, nonce },
-      withCredentials: true,
       headers: { "Content-Type": "application/json" },
     },
     "Yahoo Auth Callback"
@@ -56,8 +61,7 @@ export const checkAuthentication = async (): Promise<boolean> => {
     const response = await performRequest<boolean>(
       {
         url: endPoints.authStatus,
-        method: "GET",
-        withCredentials: true,
+        method: "GET"
       },
       "Authentication Check"
     );
@@ -72,7 +76,6 @@ export const fetchUserData = async (): Promise<YahooUser> => {
     {
       url: endPoints.userData,
       method: "GET",
-      withCredentials: true,
       headers: { "Content-Type": "application/json" },
     },
     "Fetch User Data",
@@ -85,9 +88,61 @@ export const logout = async () => {
     {
       url: endPoints.logout,
       method: "POST",
-      data: {},
-      withCredentials: true,
+      data: {}
     },
     "Logout"
+  );
+};
+
+export const fetchUserLeagues = async (): Promise<FantasyLeague[]> => {
+  return performRequest(
+    {
+      url: endPoints.userLeagues,
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      params: { scoring: "head" },
+    },
+    "Fetch User Leagues"
+  );
+};
+
+export const fetchUserTeamByLeague = async (leagueKey: string): Promise<FantasyTeam>  => {
+  return performRequest(
+    {
+      url: `${endPoints.userTeam}?leagueKey=${leagueKey}`,
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+    "Fetch User Team By League Key"
+  );
+}
+
+/**
+ * Fetches league settings, including stat categories, from the backend.
+ * @param leagueKey The key identifying the league.
+ * @returns LeagueSettings object containing stat categories and other settings.
+ */
+export const fetchLeagueSettings = async (leagueKey: string): Promise<LeagueSettings> => {
+  return performRequest(
+    {
+      url: endPoints.leagueSettings(leagueKey),
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+    "Fetch League Settings",
+    LeagueSettingsSchema.parse // Use schema validation
+  );
+};
+
+
+export const fetchBeastStandings = async (leagueKey: string): Promise<AllPlayStandings> => {
+  return performRequest(
+    {
+      url: endPoints.allPlayStandings(leagueKey),
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+    "Fetch Beast Standings",
+    AllPlayStandingsSchema.parse // Use schema validation
   );
 };
