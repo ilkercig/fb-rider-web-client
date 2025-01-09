@@ -2,7 +2,7 @@ import {
   endPoints,
 } from "./costants";
 import axios, { AxiosRequestConfig } from "axios";
-import { YahooUser, YahooUserSchema } from "./types";
+import { AllPlayStandings, AllPlayStandingsSchema, FantasyLeague, FantasyTeam, LeagueSettings, LeagueSettingsSchema, YahooUser, YahooUserSchema } from "./types";
 import logger from "../logger";
 import handleError from "./handlerError";
 
@@ -91,5 +91,58 @@ export const logout = async () => {
       data: {}
     },
     "Logout"
+  );
+};
+
+export const fetchUserLeagues = async (): Promise<FantasyLeague[]> => {
+  return performRequest(
+    {
+      url: endPoints.userLeagues,
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      params: { scoring: "head" },
+    },
+    "Fetch User Leagues"
+  );
+};
+
+export const fetchUserTeamByLeague = async (leagueKey: string): Promise<FantasyTeam>  => {
+  return performRequest(
+    {
+      url: `${endPoints.userTeam}?leagueKey=${leagueKey}`,
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+    "Fetch User Team By League Key"
+  );
+}
+
+/**
+ * Fetches league settings, including stat categories, from the backend.
+ * @param leagueKey The key identifying the league.
+ * @returns LeagueSettings object containing stat categories and other settings.
+ */
+export const fetchLeagueSettings = async (leagueKey: string): Promise<LeagueSettings> => {
+  return performRequest(
+    {
+      url: endPoints.leagueSettings(leagueKey),
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+    "Fetch League Settings",
+    LeagueSettingsSchema.parse // Use schema validation
+  );
+};
+
+
+export const fetchBeastStandings = async (leagueKey: string): Promise<AllPlayStandings> => {
+  return performRequest(
+    {
+      url: endPoints.allPlayStandings(leagueKey),
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+    "Fetch Beast Standings",
+    AllPlayStandingsSchema.parse // Use schema validation
   );
 };
