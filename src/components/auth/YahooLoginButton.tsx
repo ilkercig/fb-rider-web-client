@@ -1,5 +1,6 @@
+'use client'
 import { Button } from "@mui/material";
-import { constructYahooLoginUrl } from "../../api/authUtils";
+import { constructYahooLoginUrl } from "@/lib/api/authUtils";
 
 export default function YahooLoginButton() {
   const handleClick = () => {
@@ -10,18 +11,18 @@ export default function YahooLoginButton() {
     <Button
       variant="contained"
       sx={{
-        backgroundColor: "#6001D2", // Yahoo's primary purple
-        color: "#fff", // White text for contrast
-        textTransform: "none", // Keep text capitalization normal
-        fontSize: "1rem", // Adjust font size for readability
-        padding: "10px 20px", // Padding for a good button size
-        borderRadius: "8px", // Slightly rounded corners
-        fontWeight: "bold", // Add emphasis to text
+        backgroundColor: "#6001D2",
+        color: "#fff",
+        textTransform: "none",
+        fontSize: "1rem",
+        padding: "10px 20px",
+        borderRadius: "8px",
+        fontWeight: "bold",
         "&:hover": {
-          backgroundColor: "#7B1FA2", // Slightly lighter purple for hover effect
+          backgroundColor: "#7B1FA2",
         },
       }}
-      onClick={handleClick} // Use the onClick handler for redirect
+      onClick={handleClick}
     >
       Login with Yahoo
     </Button>

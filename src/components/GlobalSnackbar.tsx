@@ -1,25 +1,25 @@
-import { useRecoilState } from 'recoil';
-import { Snackbar, Alert } from '@mui/material';
-import { snackbarState } from '../snackbarState';
+'use client'
+import { Snackbar, Alert } from '@mui/material'
+import { useSnackbar } from '@/lib/snackbarContext'
 
 const GlobalSnackbar = () => {
-  const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+  const { snackbar, setSnackbar } = useSnackbar()
 
   const handleClose = () => {
-    setSnackbar({ ...snackbar, open: false }); // Close the Snackbar
-  };
+    setSnackbar({ ...snackbar, open: false })
+  }
 
   return (
-    <Snackbar 
-      open={snackbar.open} 
-      autoHideDuration={6000} 
+    <Snackbar
+      open={snackbar.open}
+      autoHideDuration={6000}
       onClose={handleClose}
     >
       <Alert onClose={handleClose} severity={snackbar.severity}>
         {snackbar.message}
       </Alert>
     </Snackbar>
-  );
-};
+  )
+}
 
-export default GlobalSnackbar;
+export default GlobalSnackbar

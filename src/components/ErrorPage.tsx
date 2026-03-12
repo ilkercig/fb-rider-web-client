@@ -1,13 +1,14 @@
+'use client'
 import React from "react";
 import { Box, Typography, Button, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface ErrorPageProps {
   errorMessage: string;
 }
 
 const ErrorPage: React.FC<ErrorPageProps> = ({ errorMessage }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   return (
     <Container
       maxWidth="sm"
@@ -20,7 +21,6 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ errorMessage }) => {
         bgcolor: "background.paper",
       }}
     >
-      {/* Mascot Placeholder */}
       <Box
         component="img"
         src="brick.webp"
@@ -28,7 +28,6 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ errorMessage }) => {
         sx={{ width: "100%", mb: 3 }}
       />
 
-      {/* Error Message */}
       <Typography variant="h4" color="error" gutterBottom>
         Oops! Something went wrong.
       </Typography>
@@ -36,11 +35,10 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ errorMessage }) => {
         {errorMessage}
       </Typography>
 
-      {/* Home Page Redirect Button */}
       <Button
         variant="contained"
         color="primary"
-        onClick={()=>navigate("/")}
+        onClick={() => router.push("/")}
         sx={{ textTransform: "none", fontSize: "1rem" }}
       >
         Go to Home Page

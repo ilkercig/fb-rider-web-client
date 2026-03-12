@@ -1,3 +1,4 @@
+'use client'
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -7,7 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import LogoutMenuItem from "./LogoutMenuItem";
 
-// Define the props type for the component
 interface UserProfileMenuProps {
   userName: string;
   imageUrl: string;
@@ -16,11 +16,10 @@ interface UserProfileMenuProps {
 function UserProfileMenu({ userName, imageUrl }: UserProfileMenuProps) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   return (
-    <Box sx={{ flexGrow: 0 
-    }}>
+    <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="User Profile">
         <IconButton
-          onClick={(event)=>setAnchorElUser(event.currentTarget)}
+          onClick={(event) => setAnchorElUser(event.currentTarget)}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -44,7 +43,7 @@ function UserProfileMenu({ userName, imageUrl }: UserProfileMenuProps) {
           horizontal: "right",
         }}
         open={Boolean(anchorElUser)}
-        onClose={()=> setAnchorElUser(null)}
+        onClose={() => setAnchorElUser(null)}
       >
         <LogoutMenuItem />
       </Menu>
