@@ -1,5 +1,5 @@
-import FantasyLeagueList from '@/components/FantasyLeagueCardList'
+import SeasonsDashboard from '@/components/SeasonsDashboard'
 
 export default function HomePage() {
-  return <FantasyLeagueList />
+  return <SeasonsDashboard />
 }

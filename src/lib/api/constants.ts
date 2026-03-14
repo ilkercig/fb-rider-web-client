@@ -12,6 +12,7 @@ export const endPoints = {
   userData: `${backEndUrl}/api/yahooauth/me`,
   logout: `${backEndUrl}/api/yahooauth/logout`,
   userLeagues: `${backEndUrl}/api/user/leagues`,
+  userSeasons: `${backEndUrl}/api/User/seasons`,
   userTeam: (leagueKey: string) =>
     `${backEndUrl}/api/leagues/${leagueKey}/user/team`,
   leagueSettings: (leagueKey: string) =>

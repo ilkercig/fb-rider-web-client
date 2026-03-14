@@ -26,7 +26,7 @@ export default function AppBarShell({ children }: { children: React.ReactNode })
           >
             DehDeh Premium
           </Typography>
-          {user && <UserProfileMenu userName={user.name} imageUrl={user.profile_images.image64} />}
+          {user && <UserProfileMenu userName={user.name} imageUrl={user.profileImages.image64} />}
         </Toolbar>
       </AppBar>
       <Toolbar />

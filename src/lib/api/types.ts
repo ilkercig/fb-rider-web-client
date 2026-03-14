@@ -11,14 +11,14 @@ const ProfileImagesSchema = z.object({
 const YahooUserSchema = z.object({
   email: z.string(),
   name: z.string(),
-  profile_images: ProfileImagesSchema,
+  profileImages: ProfileImagesSchema,
 });
 
 // Define the FantasyLeague schema
 const FantasyLeagueSchema = z.object({
   key: z.string().nonempty("Key is required"),
   name: z.string().nonempty("Name is required"),
-  logoUrl: z.string().url().optional(),
+  logoUrl: z.string().optional(),
 });
 
 // Define the FantasyPlayer schema
@@ -68,6 +68,23 @@ const AllPlayStandingsSchema = z.object({
   teamScores: z.array(TeamScoreSchema),
 });
 
+const LeagueResponseSchema = z.object({
+  key: z.string(),
+  id: z.string(),
+  name: z.string(),
+  logoUrl: z.string().optional().nullable(),
+  scoringType: z.string(),
+  currentWeek: z.number().int(),
+  startWeek: z.number().int(),
+});
+
+const SeasonResponseSchema = z.object({
+  key: z.string(),
+  seasonYear: z.number().int(),
+  isSeasonOver: z.boolean(),
+  leagues: z.array(LeagueResponseSchema),
+});
+
 export {
   ProfileImagesSchema,
   YahooUserSchema,
@@ -79,6 +96,8 @@ export {
   LeagueSettingsSchema,
   AllPlayStandingsSchema,
   TeamScoreSchema,
+  LeagueResponseSchema,
+  SeasonResponseSchema,
 };
 
 export type YahooUser = z.infer<typeof YahooUserSchema>;
@@ -91,3 +110,5 @@ export type StatCategory = z.infer<typeof StatCategorySchema>;
 export type LeagueSettings = z.infer<typeof LeagueSettingsSchema>;
 export type AllPlayStandings = z.infer<typeof AllPlayStandingsSchema>;
 export type TeamScore = z.infer<typeof TeamScoreSchema>;
+export type LeagueResponse = z.infer<typeof LeagueResponseSchema>;
+export type SeasonResponse = z.infer<typeof SeasonResponseSchema>;

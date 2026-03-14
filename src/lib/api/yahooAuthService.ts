@@ -7,6 +7,8 @@ import {
   FantasyTeam,
   LeagueSettings,
   LeagueSettingsSchema,
+  SeasonResponse,
+  SeasonResponseSchema,
   YahooUser,
   YahooUserSchema,
 } from "./types";
@@ -126,6 +128,18 @@ export const fetchLeagueSettings = async (leagueKey: string): Promise<LeagueSett
     },
     "Fetch League Settings",
     LeagueSettingsSchema.parse
+  );
+};
+
+export const fetchUserSeasons = async (): Promise<SeasonResponse[]> => {
+  return performRequest(
+    {
+      url: endPoints.userSeasons,
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+    "Fetch User Seasons",
+    (data) => SeasonResponseSchema.array().parse(data)
   );
 };
 
